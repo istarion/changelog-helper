@@ -102,7 +102,7 @@ class CheckVersionException(Exception):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate CHANGELOG.md file from changelog yml files.')
-    parser.add_argument('version', help="New version, in v5.6.7 - like format", nargs='?', default='v')
+    parser.add_argument('version', help="New version, in format like v5.6.7", nargs='?', default='v')
     parser.add_argument('--rebuild', action='store_true')
 
     app_args = parser.parse_args()
