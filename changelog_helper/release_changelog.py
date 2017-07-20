@@ -35,6 +35,7 @@ def move_unreleased_changelogs(version):
     for yml_file in files_to_move:
         shutil.move(os.path.join(unreleased_folder, yml_file), released_version_folder)
     write_release_info(released_version_folder)
+    subprocess.call("git add {PATH}".format(PATH=released_version_folder), shell=True)
 
 
 def write_release_info(released_version_folder):
