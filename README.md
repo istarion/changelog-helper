@@ -1,4 +1,4 @@
-# changelog-helper
+# changelog_helper
 
 These Python2/3 compatible scripts can create and compile changelog files from different `git` 
 branches without conflicts.
@@ -6,6 +6,10 @@ branches without conflicts.
 Inspired by GitLab team approach to changelogs.
 <https://docs.gitlab.com/ee/development/changelog.html>
 
+## How to install:
+`pip install changelog_helper`
+
+## Info
 
 Adding changelog entities:
 
