@@ -104,7 +104,7 @@ def build_changelog():
         changes = get_version_changes(version)
         for author in changes:
             result.append("*@{AUTHOR}*\n".format(AUTHOR=author))
-            result += changes[author]
+            result += changes[author] + ['\n']
         result.append("\n")
     archive_changes_file = os.path.join(get_git_root(), 'changelogs', 'archive.md')
     if os.path.exists(archive_changes_file):
