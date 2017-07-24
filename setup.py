@@ -32,7 +32,7 @@ class Sdist(sdist):
 here = os.path.abspath(os.path.dirname(__file__))
 
 try:
-    LONG_DESCRIPTION = open(os.path.join(here, "README.md")).read()
+    LONG_DESCRIPTION = open(os.path.join(here, "README.rst")).read()
 except IOError:
     LONG_DESCRIPTION = ""
 
