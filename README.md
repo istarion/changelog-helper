@@ -28,17 +28,16 @@ Adding changelog entities:
 
 Release version and compile changelog:
 
-    release-changelog [-h] [--author AUTHOR] [--amend] [--force] [title]
+    release-changelog [-h] [--inline INLINE] [--rebuild] [version]
     
-    Generate a changelog entry file in git project root.
+    Generate CHANGELOG.md file from changelog yml files.
     
     positional arguments:
-      title
+      version          New version, in format like v5.6.7
     
     optional arguments:
       -h, --help       show this help message and exit
-      --author AUTHOR
-      --amend
-      --force
+      --inline INLINE  Inline minor release, with single change
+      --rebuild
 
 You can move your old changelog to `changelogs/archive.md`, and it will be appended to CHANGELOG.md 
