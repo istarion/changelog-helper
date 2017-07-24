@@ -60,8 +60,8 @@ setup(
     install_requires=requires,
     entry_points={
         'console_scripts': [
-            'add_changelog = changelog_helper.add_changelog:main',
-            'release_changelog = changelog_helper.release_changelog:main'
+            'add-changelog = changelog_helper.add_changelog:main',
+            'release-changelog = changelog_helper.release_changelog:main'
         ]
     },
     cmdclass={
