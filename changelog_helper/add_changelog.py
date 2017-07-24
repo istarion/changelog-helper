@@ -66,13 +66,14 @@ def commit_changes(yaml_file_path):
     print("Changes have been committed to local git repository.")
 
 
-def main():
-    parser = argparse.ArgumentParser(description='Generate a changelog entry file in git project root.')
-    parser.add_argument('title', nargs='?', default=get_title())
-    parser.add_argument('--author', default=get_author())
-    parser.add_argument('--amend', action='store_true')
-    parser.add_argument('--force', action='store_true')
-    app_args = parser.parse_args()
+def main(app_args=None):
+    if not app_args:
+        parser = argparse.ArgumentParser(description='Generate a changelog entry file in git project root.')
+        parser.add_argument('title', nargs='?', default=get_title())
+        parser.add_argument('--author', default=get_author())
+        parser.add_argument('--amend', action='store_true')
+        parser.add_argument('--force', action='store_true')
+        app_args = parser.parse_args()
 
     log_entry = {
         'title': app_args.title,
@@ -83,7 +84,6 @@ def main():
     subprocess.call("git add {FILENAME}".format(FILENAME=get_yml_file_path()), shell=True)
     if app_args.amend:
         commit_changes(get_yml_file_path())
-
 
 if __name__ == '__main__':
     main()

@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 
 import argparse
+from collections import namedtuple
 import datetime
 from io import open
 import os
@@ -10,7 +11,11 @@ import shutil
 import subprocess
 import yaml
 
+import changelog_helper.add_changelog
+
 CHANGELOG_FILE = 'CHANGELOG.md'
+
+AddChangelogParams = namedtuple('AddChangelogParams', ['title', 'author', 'amend', 'force'])
 
 
 def get_git_root():
@@ -129,13 +134,21 @@ class CheckVersionException(Exception):
     pass
 
 
-def main():
-    parser = argparse.ArgumentParser(description='Generate CHANGELOG.md file from changelog yml files.')
-    parser.add_argument('version', help="New version, in format like v5.6.7", nargs='?', default='v')
-    parser.add_argument('--rebuild', action='store_true')
-
-    app_args = parser.parse_args()
-
+def main(app_args=None):
+    if not app_args:
+        parser = argparse.ArgumentParser(description='Generate CHANGELOG.md file from changelog yml files.')
+        parser.add_argument('version', help="New version, in format like v5.6.7", nargs='?', default='v')
+        parser.add_argument('--inline', help="Inline minor release, with single change", default='')
+        parser.add_argument('--rebuild', action='store_true')
+        app_args = parser.parse_args()
+    if app_args.version == 'v':
+        app_args.version = get_version_folders()[0].split('.')
+        app_args.version[-1] = str(int(app_args.version[-1]) + 1)
+        app_args.version = '.'.join(app_args.version)
+    if app_args.inline:
+        changelog_helper.add_changelog.main(
+            app_args=AddChangelogParams(title=app_args.inline, author=get_author(), force=False, amend=False)
+        )
     if not app_args.rebuild:
         try:
             check_version(app_args.version)

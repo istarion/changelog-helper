@@ -32,14 +32,14 @@ class Sdist(sdist):
 here = os.path.abspath(os.path.dirname(__file__))
 
 try:
-    LONG_DESCRIPTION = open(os.path.join(here, "README.md")).read()
+    LONG_DESCRIPTION = open(os.path.join(here, "README.rst")).read()
 except IOError:
     LONG_DESCRIPTION = ""
 
 with open(os.path.join(here, 'requirements.txt')) as f:
     requires = f.read()
 setup(
-    name='changelog_helper',
+    name='changelog-helper',
     version=app_version,
     description='These Python2/3 compatible scripts can create and compile changelog files from different `git`',
     long_description=LONG_DESCRIPTION,
@@ -51,8 +51,8 @@ setup(
     ],
     author='Sergey Zavgorodniy',
     author_email='s.zavgorodniy@i-dgtl.ru',
-    url='https://github.com/istarion/changelog_helper',
-    download_url='https://github.com/istarion/changelog_helper/archive/{VERSION}.tar.gz'.format(VERSION=app_version),
+    url='https://github.com/istarion/changelog-helper',
+    download_url='https://github.com/istarion/changelog-helper/archive/{VERSION}.tar.gz'.format(VERSION=app_version),
     keywords='git changelog generator',
     packages=find_packages(),
     include_package_data=True,
@@ -60,8 +60,8 @@ setup(
     install_requires=requires,
     entry_points={
         'console_scripts': [
-            'add_changelog = changelog_helper.add_changelog:main',
-            'release_changelog = changelog_helper.release_changelog:main'
+            'add-changelog = changelog_helper.add_changelog:main',
+            'release-changelog = changelog_helper.release_changelog:main'
         ]
     },
     cmdclass={
