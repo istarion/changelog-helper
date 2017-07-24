@@ -41,7 +41,7 @@ with open(os.path.join(here, 'requirements.txt')) as f:
 setup(
     name='changelog-helper',
     version=app_version,
-    description='These Python2/3 compatible scripts can create and compile changelog files from different `git`',
+    description='Simple scripts for creating and compiling changelog files.',
     long_description=LONG_DESCRIPTION,
     classifiers=[
         "Programming Language :: Python",
