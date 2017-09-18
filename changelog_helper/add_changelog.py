@@ -43,15 +43,19 @@ def get_yml_file_path():
     return file_path
 
 
-def write_changelog(log_entry, force=False):
+def write_changelog(log_entry, rewrite=False):
     file_path = get_yml_file_path()
 
     if os.path.exists(file_path):
-        if force:
+        if rewrite:
             print("File {PATH} already exists, and will be lost.".format(PATH=file_path))
         else:
-            print("ERROR: File {PATH} already exists.\nIf you want to rewrite it: use --force flag.".format(PATH=file_path))
-            exit(1)
+            with open(file_path, 'r') as f:
+                old_title = yaml.load(f)['title']
+                if isinstance(old_title, list):
+                    log_entry['title'] = old_title + [log_entry['title']]
+                else:
+                    log_entry['title'] = [old_title, log_entry['title']]
 
     print("Saving change into file: " + file_path)
     yml_content = yaml.safe_dump(log_entry, allow_unicode=True, default_flow_style=False, encoding=None)
@@ -72,7 +76,7 @@ def main(app_args=None):
         parser.add_argument('title', nargs='?', default=get_title())
         parser.add_argument('--author', default=get_author())
         parser.add_argument('--amend', action='store_true')
-        parser.add_argument('--force', action='store_true')
+        parser.add_argument('--rewrite', action='store_true')
         app_args = parser.parse_args()
 
     log_entry = {
@@ -80,7 +84,7 @@ def main(app_args=None):
         'author': app_args.author
     }
 
-    write_changelog(log_entry, force=app_args.force)
+    write_changelog(log_entry, rewrite=app_args.rewrite)
     subprocess.call("git add {FILENAME}".format(FILENAME=get_yml_file_path()), shell=True)
     if app_args.amend:
         commit_changes(get_yml_file_path())

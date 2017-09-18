@@ -86,7 +86,11 @@ def get_version_changes(version):
             entry = yaml.load(f)
         if entry['author'] not in changes:
             changes[entry['author']] = []
-        changes[entry['author']].append('- ' + entry['title'] + '\n')
+
+        if not isinstance(entry['title'], list):
+            entry['title'] = [entry['title']]
+        for change in entry['title']:
+            changes[entry['author']].append('- ' + change + '\n')
     return changes
 
 
